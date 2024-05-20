@@ -15,8 +15,9 @@ public class UserTasksApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ArrayList<String> userTasks = new ArrayList<>();
 
+        // Define a List of Tasks, a Pane and a View
+        ArrayList<String> userTasks = new ArrayList<>();
         Pane aPane = new Pane();
         UserTasksAppView view = new UserTasksAppView();
 
@@ -49,7 +50,7 @@ public class UserTasksApp extends Application {
                 } // End if
             }
         });
-
+        // When the [Remove Task] button is pressed, remove the selected item in the list
         view.getButtons().getRemoveButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
