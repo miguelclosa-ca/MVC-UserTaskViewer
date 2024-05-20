@@ -35,12 +35,13 @@ public class UserTasksAppView extends Pane {
 
         // Create the buttons
         buttons = new UserTasksButtonPane();
+        buttons.getRemoveButton().setDisable(true);
         buttons.relocate(0,435);
 
 
         // Create the ListView which will contain all the user's tasks
         userTasks = new ListView<>();
-        userTasks.relocate(10,45);
+        userTasks.relocate(12,45);
         userTasks.setPrefSize(275,375);
 
         // Create the title Label
