@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -73,11 +74,9 @@ public class UserTasksApp extends Application {
         view.getButtons().getSaveButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // Ask the user for a filename they would like to save the file as
-                String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
-
+                // Save the file
                 try {
-                    saveToFile(userTasks, filename);
+                    saveToFile(userTasks);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -90,23 +89,41 @@ public class UserTasksApp extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
 
+                // First check if the task list is empty
+                // If it isn't, ask the user if they would like to save their tasks
+
+                if (!userTasks.isEmpty()){
+                    int dialogue = javax.swing.JOptionPane.showConfirmDialog(null, "Save current tasks? ");
+                    if (dialogue == JOptionPane.YES_OPTION){
+                        try {
+                            saveToFile(userTasks);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } // End try
+                    } // End if
+                } // End if
+
+
                 // Clear the current list of tasks
                 userTasks.clear();
+
+
                 // Ask for a filename
                 String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
+                if (filename != null) {
+                    // If the file does exist, load the file
+                    if (fileExists(filename)) {
+                        userTasks.addAll(loadFromFile(filename));
+                        view.getUserTasks().setItems(FXCollections.observableArrayList(userTasks));
+                        if (!userTasks.isEmpty()) {
+                            view.getButtons().getSaveButton().setDisable(false);
+                        } // End if
 
-                // If the file does exist, load the file
-                if (fileExists(filename)){
-                    userTasks.addAll(loadFromFile(filename));
-                    view.getUserTasks().setItems(FXCollections.observableArrayList(userTasks));
-                    if (!userTasks.isEmpty()){
-                        view.getButtons().getSaveButton().setDisable(false);
+                        // Otherwise do not load the file and show a message to the user
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(null, '"' + filename + '"' + " does not exist!");
                     } // End if
-
-                    // Otherwise do not load the file and show a message to the user
-                }else{
-                    javax.swing.JOptionPane.showMessageDialog(null, '"' + filename + '"' + " does not exist!");
-                } // End if
+                }
 
 
 
@@ -118,14 +135,17 @@ public class UserTasksApp extends Application {
 
     }
 
-    public boolean saveToFile(ArrayList<String> tasks, String filename) throws IOException{
+    public boolean saveToFile(ArrayList<String> tasks) throws IOException{
+
+        String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
+
         try {
 
             // Create an ObjectOutputStream, write the list of tasks and close the Stream.
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
             out.writeObject(tasks);
             out.close();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             return false;
         } // End try
 
