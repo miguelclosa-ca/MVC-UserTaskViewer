@@ -36,6 +36,7 @@ public class UserTasksAppView extends Pane {
         // Create the buttons
         buttons = new UserTasksButtonPane();
         buttons.getRemoveButton().setDisable(true);
+        buttons.getSaveButton().setDisable(true);
         buttons.relocate(0,435);
 
 
