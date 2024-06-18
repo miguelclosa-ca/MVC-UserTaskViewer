@@ -43,7 +43,17 @@ public class UserTasksButtonPane extends Pane {
         removeButton.setPrefSize(100,50);
         removeButton.relocate(165,0);
 
-        buttonPane.getChildren().addAll(addButton,removeButton);
+        // Define the attributes of the [Save...] Button:
+        saveButton = new Button("Save...");
+        saveButton.setPrefSize(100,50);
+        saveButton.relocate(35,55);
+
+        // Define the attributes of the [Load...] Button:
+        loadButton = new Button("Load...");
+        loadButton.setPrefSize(100,50);
+        loadButton.relocate(165,55);
+
+        buttonPane.getChildren().addAll(addButton,removeButton, saveButton, loadButton);
 
         getChildren().addAll(buttonPane);
 
