@@ -81,7 +81,6 @@ public class UserTasksApp extends Application {
                     throw new RuntimeException(e);
                 }
 
-
             }
         });
         // When the [Load...] button is pressed,
@@ -119,22 +118,25 @@ public class UserTasksApp extends Application {
                             view.getButtons().getSaveButton().setDisable(false);
                         } // End if
 
+                        primaryStage.setTitle("My Tasks - " + '"' + filename + '"');
+
                         // Otherwise do not load the file and show a message to the user
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, '"' + filename + '"' + " does not exist!");
                     } // End if
-                }
-
-
-
+                } // End if
 
             }
         });
 
-
-
     }
 
+    /**
+     * Take a given ArrayList<String> and save the list to a file.
+     * @param tasks Given ArrayList<String> to save
+     * @return
+     * @throws IOException
+     */
     public boolean saveToFile(ArrayList<String> tasks) throws IOException{
 
         String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
@@ -152,6 +154,11 @@ public class UserTasksApp extends Application {
         return true;
     } // boolean saveToFile(ArrayList<String>, String)
 
+    /**
+     * Load a file, and parse the object into an ArrayList<String> object.
+     * @param filename The file to load
+     * @return The ArrayList<String> object
+     */
     public ArrayList<String> loadFromFile(String filename){
         ArrayList<String> loadedTasks;
 
@@ -166,12 +173,17 @@ public class UserTasksApp extends Application {
             throw new RuntimeException(e);
         }
         return loadedTasks;
-    }
+    } // ArrayList<String> loadFromFile(String)
 
+    /**
+     * Check if a file exists in directory.
+     * @param filename A file to check
+     * @return If the file exists (true) or doesn't (false)
+     */
     public boolean fileExists(String filename){
         File tmp = new File(filename);
         return tmp.exists();
-    }
+    } // boolean fileExists(String)
 
 
 }
