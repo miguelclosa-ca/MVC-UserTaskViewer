@@ -69,9 +69,11 @@ public class UserTasksApp extends Application {
         });
 
 
+        // When the [Save...] button is pressed,
         view.getButtons().getSaveButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                // Ask the user for a filename they would like to save the file as
                 String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
 
                 try {
@@ -83,7 +85,7 @@ public class UserTasksApp extends Application {
 
             }
         });
-
+        // When the [Load...] button is pressed,
         view.getButtons().getLoadButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -91,12 +93,22 @@ public class UserTasksApp extends Application {
                 // Clear the current list of tasks
                 userTasks.clear();
                 // Ask for a filename
-                String filename = javax.swing.JOptionPane.showInputDialog("Enter filename: ");
-                userTasks.addAll(loadFromFile(filename));
-                view.getUserTasks().setItems(FXCollections.observableArrayList(userTasks));
-                if (!userTasks.isEmpty()){
-                    view.getButtons().getSaveButton().setDisable(false);
+                String filename = javax.swing.JOptionPane.showInputDialog("Enter a filename: ");
+
+                // If the file does exist, load the file
+                if (fileExists(filename)){
+                    userTasks.addAll(loadFromFile(filename));
+                    view.getUserTasks().setItems(FXCollections.observableArrayList(userTasks));
+                    if (!userTasks.isEmpty()){
+                        view.getButtons().getSaveButton().setDisable(false);
+                    } // End if
+
+                    // Otherwise do not load the file and show a message to the user
+                }else{
+                    javax.swing.JOptionPane.showMessageDialog(null, '"' + filename + '"' + " does not exist!");
                 } // End if
+
+
 
 
             }
@@ -134,6 +146,11 @@ public class UserTasksApp extends Application {
             throw new RuntimeException(e);
         }
         return loadedTasks;
+    }
+
+    public boolean fileExists(String filename){
+        File tmp = new File(filename);
+        return tmp.exists();
     }
 
 
