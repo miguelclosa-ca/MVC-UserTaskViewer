@@ -51,6 +51,6 @@ public class UserTasksAppView extends Pane {
 
         getChildren().addAll(buttons, titleLabel, userTasks);
 
-        setPrefSize(300,500);
+        setPrefSize(300,550);
     }
 }

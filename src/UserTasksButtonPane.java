@@ -5,6 +5,9 @@ public class UserTasksButtonPane extends Pane {
 
     private Button addButton, removeButton;
 
+    // Create buttons to save and load
+    private Button saveButton, loadButton;
+
     /**
      * Getters and Setters
      */
@@ -15,6 +18,14 @@ public class UserTasksButtonPane extends Pane {
 
     public Button getRemoveButton() {
         return removeButton;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    public Button getLoadButton() {
+        return loadButton;
     }
 
     public UserTasksButtonPane(){
