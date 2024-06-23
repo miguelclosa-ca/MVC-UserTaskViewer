@@ -4,6 +4,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UserTasksAppView extends Pane {
@@ -31,7 +32,7 @@ public class UserTasksAppView extends Pane {
         userTasks.setItems(FXCollections.observableArrayList(tasksToSet));
     }
 
-    public UserTasksAppView(){
+    public UserTasksAppView() throws IOException {
 
         // Create the buttons
         buttons = new UserTasksButtonPane();
@@ -53,5 +54,11 @@ public class UserTasksAppView extends Pane {
         getChildren().addAll(buttons, titleLabel, userTasks);
 
         setPrefSize(300,550);
+
+        // A debug line
+        for (int i = 0 ; i < buttons.getTranslations().size(); i++){
+            System.out.print(buttons.getTranslations().get(i));
+        }
+
     }
 }
