@@ -4,10 +4,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UserTasksAppView extends Pane {
+public class UserTasksAppView extends Pane implements UserTasksView{
 
     private ListView<String> userTasks;
 
@@ -56,9 +58,17 @@ public class UserTasksAppView extends Pane {
         setPrefSize(300,550);
 
         // A debug line
-        for (int i = 0 ; i < buttons.getTranslations().size(); i++){
-            System.out.print(buttons.getTranslations().get(i));
-        }
+//        for (int i = 0 ; i < buttons.getTranslations().size(); i++){
+//            System.out.print(buttons.getTranslations().get(i));
+//        }
 
+    }
+
+    @Override
+    public void update(UserTasksAppView view, ArrayList<String> translations) {
+            view.getButtons().getAddButton().setText(translations.get(0));
+            view.getButtons().getRemoveButton().setText(translations.get(1));
+            view.getButtons().getSaveButton().setText(translations.get(2));
+            view.getButtons().getLoadButton().setText(translations.get(3));
     }
 }

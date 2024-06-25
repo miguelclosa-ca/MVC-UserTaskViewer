@@ -23,6 +23,11 @@ public class UserTasksApp extends Application {
         Pane aPane = new Pane();
         UserTasksAppView view = new UserTasksAppView();
 
+    // Create an ArrayList of Strings. This is so that the program can load a translation file.
+        ArrayList<String> translations = loadTranslations("t_en");
+//        boolean languageToggle = false;
+
+
         aPane.getChildren().addAll(view);
 
         // Tweak the GUI window attributes
@@ -129,7 +134,44 @@ public class UserTasksApp extends Application {
             }
         });
 
-    }
+
+        view.getButtons().getTrButton().setOnAction(new EventHandler<ActionEvent>() {
+
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+
+                // If the Translation button displays [a],
+                if (view.getButtons().getTrButton().getText().equals("a")){
+                    try{
+
+                        // Change the language of the buttons
+                        view.update(view, loadTranslations("t_jp"));
+                        view.getButtons().getTrButton().setText("あ");
+
+                    }catch (IOException e){
+                        throw new RuntimeException(e);
+                    } // End try
+
+
+                    // Otherwise if the Translation button displays anything else,
+                }else{
+                    try {
+
+                        // Revert back to English
+                        view.update(view, loadTranslations("t_en"));
+                        view.getButtons().getTrButton().setText("a");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } // End try
+
+                } // End if
+            }
+        });
+    } // void start(Stage)
+
+
 
     /**
      * Take a given ArrayList<String> and save the list to a file.
@@ -184,6 +226,32 @@ public class UserTasksApp extends Application {
         File tmp = new File(filename);
         return tmp.exists();
     } // boolean fileExists(String)
+
+
+    /**
+     * Load a file of translations for the buttons.
+     * @param filename File name to load
+     * @return ArrayList of translations
+     * @throws IOException
+     */
+    public ArrayList<String> loadTranslations(String filename) throws IOException {
+        ArrayList<String> loadedTranslations = new ArrayList<>();
+
+        // Open the file, read the first line as it contains the number of lines to read
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+        int num = Integer.parseInt(in.readLine());
+
+        // Read the file
+        for (int i = 0 ; i < num; i++){
+            loadedTranslations.add(in.readLine());
+        } // End for
+
+        // Close the file
+        in.close();
+
+        return loadedTranslations;
+
+    } // ArrayList<String> loadTranslations(String)
 
 
 }
