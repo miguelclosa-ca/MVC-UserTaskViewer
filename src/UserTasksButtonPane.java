@@ -14,6 +14,9 @@ public class UserTasksButtonPane extends Pane {
     // Create an ArrayList of Strings. This is so that the program can load a translation file.
     private ArrayList<String> translations;
 
+    // Create a button to change the language
+    private Button trButton;
+
     /**
      * Getters and Setters
      */
@@ -36,6 +39,10 @@ public class UserTasksButtonPane extends Pane {
 
     public ArrayList<String> getTranslations() {
         return translations;
+    }
+
+    public Button getTrButton() {
+        return trButton;
     }
 
     public UserTasksButtonPane() throws IOException {
@@ -68,7 +75,12 @@ public class UserTasksButtonPane extends Pane {
         loadButton.setPrefSize(100,50);
         loadButton.relocate(165,55);
 
-        buttonPane.getChildren().addAll(addButton,removeButton, saveButton, loadButton);
+        // Define the attributes of the [Translation] Button:
+        trButton = new Button("a");
+        trButton.setPrefSize(20,20);
+        trButton.relocate(140, 40);
+
+        buttonPane.getChildren().addAll(addButton,removeButton, saveButton, loadButton, trButton);
 
         getChildren().addAll(buttonPane);
 
