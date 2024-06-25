@@ -5,6 +5,7 @@
 > 2. Remove tasks from a list
 > 3. Save a list of a tasks locally
 > 4. Load a list of tasks from your computer (given a filename)
+> 5. Toggle between two languages
 
 # To do:
 > 1. Visual appearance overhaul 
